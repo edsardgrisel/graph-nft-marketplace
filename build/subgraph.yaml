@@ -1,0 +1,49 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: NftPawnShop
+    network: sepolia
+    source:
+      address: "0xE7F561f13469e30c4145dCAeD978358D000d4341"
+      abi: NftPawnShop
+      startBlock: 5626248
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - NftDelisted
+        - NftListed
+        - NftSold
+        - OwnershipTransferred
+        - PawnAgreementRemoved
+        - PawnRequestApproved
+        - PawnRequestRemoved
+        - PawnRequested
+      abis:
+        - name: NftPawnShop
+          file: NftPawnShop/abis/NftPawnShop.json
+      eventHandlers:
+        - event: NftDelisted(indexed address,indexed address,indexed uint256)
+          handler: handleNftDelisted
+        - event: NftListed(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleNftListed
+        - event: NftSold(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleNftSold
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PawnAgreementRemoved(address,indexed address,indexed address,indexed uint256)
+          handler: handlePawnAgreementRemoved
+        - event: PawnRequestApproved(address,indexed address,indexed address,indexed
+            uint256,uint256,uint256,uint256)
+          handler: handlePawnRequestApproved
+        - event: PawnRequestRemoved(indexed address,indexed address,indexed uint256)
+          handler: handlePawnRequestRemoved
+        - event: PawnRequested(indexed address,indexed address,indexed
+            uint256,uint256,uint256,uint256)
+          handler: handlePawnRequested
+      file: NftPawnShop/NftPawnShop.wasm
