@@ -61,6 +61,7 @@ export function handleNftListed(event: NftListedEvent): void {
   nftListed.transactionHash = event.transaction.hash
 
   activeListing.seller = event.params.seller
+  activeListing.buyer = null
   activeListing.nftAddress = event.params.nftAddress
   activeListing.tokenId = event.params.tokenId
   activeListing.price = event.params.price

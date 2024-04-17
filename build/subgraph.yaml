@@ -8,7 +8,7 @@ dataSources:
     name: NftPawnShop
     network: sepolia
     source:
-      address: "0xE7F561f13469e30c4145dCAeD978358D000d4341"
+      address: "0xb25dcc2b5099cd634eea11632aac5104f2488f8a"
       abi: NftPawnShop
       startBlock: 5626248
     mapping:
