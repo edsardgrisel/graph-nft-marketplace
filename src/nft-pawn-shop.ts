@@ -112,6 +112,7 @@ export function handlePawnAgreementRemoved(
   }
 
   pawnAgreementRemoved.borrower = event.params.borrower
+  pawnAgreementRemoved.lender = event.params.lender
   pawnAgreementRemoved.nftAddress = event.params.nftAddress
   pawnAgreementRemoved.tokenId = event.params.tokenId
   pawnAgreementRemoved.blockNumber = event.block.number
@@ -121,6 +122,7 @@ export function handlePawnAgreementRemoved(
   activePawnAgreement!.lender = Address.fromString('0x000000000000000000000000000000000000dEaD')
 
   pawnAgreementRemoved.save()
+  activePawnAgreement!.save()
 }
 
 export function handlePawnRequestApproved(
@@ -128,6 +130,7 @@ export function handlePawnRequestApproved(
 ): void {
   let pawnRequestApproved = PawnRequestApproved.load(getIdFromEvent(event.params.tokenId, event.params.nftAddress))
   let activePawnAgreement = ActivePawnAgreement.load(getIdFromEvent(event.params.tokenId, event.params.nftAddress))
+  let activePawnRequest = ActivePawnRequest.load(getIdFromEvent(event.params.tokenId, event.params.nftAddress))
 
   if(!pawnRequestApproved) {
     pawnRequestApproved = new PawnRequestApproved(getIdFromEvent(event.params.tokenId, event.params.nftAddress))
@@ -137,6 +140,7 @@ export function handlePawnRequestApproved(
   }
 
   pawnRequestApproved.borrower = event.params.borrower
+  pawnRequestApproved.lender = event.params.lender
   pawnRequestApproved.nftAddress = event.params.nftAddress
   pawnRequestApproved.tokenId = event.params.tokenId
   pawnRequestApproved.loanAmount = event.params.loanAmount
@@ -147,6 +151,7 @@ export function handlePawnRequestApproved(
   pawnRequestApproved.transactionHash = event.transaction.hash
 
   activePawnAgreement.borrower = event.params.borrower
+  activePawnAgreement.lender = event.params.lender
   activePawnAgreement.nftAddress = event.params.nftAddress
   activePawnAgreement.tokenId = event.params.tokenId
   activePawnAgreement.loanAmount = event.params.loanAmount
@@ -156,8 +161,11 @@ export function handlePawnRequestApproved(
   activePawnAgreement.blockTimestamp = event.block.timestamp
   activePawnAgreement.transactionHash = event.transaction.hash
 
+  activePawnRequest!.lender = event.params.lender
+
   pawnRequestApproved.save()
   activePawnAgreement.save()
+  activePawnRequest!.save()
 
 }
 
@@ -177,6 +185,9 @@ export function handlePawnRequestRemoved(event: PawnRequestRemovedEvent): void {
   pawnRequestRemoved.transactionHash = event.transaction.hash
 
   activePawnRequest!.lender = Address.fromString('0x000000000000000000000000000000000000dEaD')
+
+  pawnRequestRemoved.save()
+  activePawnRequest!.save()
 }
 
 export function handlePawnRequested(event: PawnRequestedEvent): void {
@@ -201,6 +212,7 @@ export function handlePawnRequested(event: PawnRequestedEvent): void {
   pawnRequested.transactionHash = event.transaction.hash
 
   activePawnRequest.borrower = event.params.borrower
+  activePawnRequest.lender = null
   activePawnRequest.nftAddress = event.params.nftAddress
   activePawnRequest.tokenId = event.params.tokenId
   activePawnRequest.loanAmount = event.params.loanAmount

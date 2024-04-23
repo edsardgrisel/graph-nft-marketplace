@@ -13,7 +13,7 @@ type ActiveListing @entity {
 type ActivePawnRequest @entity {
   id: ID!
   borrower: Bytes! # address
-  lender: Bytes! # address
+  lender: Bytes # address
   nftAddress: Bytes! # address
   tokenId: BigInt! # uint256
   loanAmount: BigInt! # uint256

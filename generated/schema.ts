@@ -217,17 +217,21 @@ export class ActivePawnRequest extends Entity {
     this.set("borrower", Value.fromBytes(value));
   }
 
-  get lender(): Bytes {
+  get lender(): Bytes | null {
     let value = this.get("lender");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
       return value.toBytes();
     }
   }
 
-  set lender(value: Bytes) {
-    this.set("lender", Value.fromBytes(value));
+  set lender(value: Bytes | null) {
+    if (!value) {
+      this.unset("lender");
+    } else {
+      this.set("lender", Value.fromBytes(<Bytes>value));
+    }
   }
 
   get nftAddress(): Bytes {
