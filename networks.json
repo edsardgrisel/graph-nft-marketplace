@@ -1,7 +1,7 @@
 {
   "sepolia": {
     "NftPawnShop": {
-      "address": "0x7Ae3234600de5B6aB066be590Dd5232815d2bf96",
+      "address": "0xCBf08181c60507fd69643c40B5fAcEba514FFD23",
       "startBlock": 5626248
     }
   }
